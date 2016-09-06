@@ -9,6 +9,7 @@ package interfaz;
  *
  * @author mzuleta4
  */
+import clases.*;
 public class Principal extends javax.swing.JFrame {
 
     /**
@@ -33,7 +34,7 @@ public class Principal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         txtDenominador1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbOp = new javax.swing.JComboBox<>();
         txtNumerador2 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         txtDenominador2 = new javax.swing.JTextField();
@@ -56,8 +57,8 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 60, 10));
         jPanel1.add(txtDenominador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 60, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suma", "Resta", "Multiplicacion", "Division\t" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 60, -1));
+        cmbOp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suma", "Resta", "Multiplicacion", "Division\t" }));
+        jPanel1.add(cmbOp, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 60, -1));
         jPanel1.add(txtNumerador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 60, -1));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 60, 10));
         jPanel1.add(txtDenominador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 60, -1));
@@ -70,9 +71,19 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(txtDenominador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 60, -1));
 
         cmdCalcular.setText("Calcular");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, -1, -1));
 
         cmdLimpiar.setText("Limpiar");
+        cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLimpiarActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 210));
@@ -80,6 +91,50 @@ public class Principal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(437, 251));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+
+        int op,n1,n2,n3,d1,d2,d3;
+        Fraccionario f1, f2,f3=null;
+        op = cmbOp.getSelectedIndex();
+        
+        n1 = Integer.parseInt(txtNumerador1.getText());
+        n2 = Integer.parseInt(txtDenominador1.getText());
+        d1 = Integer.parseInt(txtNumerador2.getText());
+        d2 = Integer.parseInt(txtDenominador2.getText());
+        
+        try{
+        f1 = new Fraccionario (n1,d1);
+        f2 = new Fraccionario (n2,d2);
+        
+        switch (op){
+            case 0:
+            f3 = f1.suma(f2);
+            break;
+            case 1:
+            f3 = f1.resta(f2);
+            break;
+            
+            
+        }
+        txtNumerador3.setText(""+f3.getNumerador());
+        txtDenominador3.setText(""+f3.getDenominador());
+        }
+        catch(DenominadorCeroException e){
+                Helper.mensaje(null, "No se puede colocar 0 en el denominador", "Error", 2);
+                }
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
+
+        txtNumerador1.setText("");
+        txtNumerador2.setText("");
+        txtNumerador3.setText("");
+        txtDenominador1.setText("");
+        txtDenominador2.setText("");
+        txtDenominador3.setText("");
+        cmbOp.setSelectedItem(0);
+    }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,9 +172,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbOp;
     private javax.swing.JButton cmdCalcular;
     private javax.swing.JButton cmdLimpiar;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
